@@ -1,6 +1,8 @@
 var gulp = require('gulp');
 var path = require('path');
 var del = require('del');
+var browserSync = require('browser-sync');
+var reload = browserSync.reload;
 var es = require('event-stream');
 var gutil = require('gulp-util');
 var spawn = require('child_process').spawn;
@@ -13,7 +15,7 @@ var environment = $.util.env.type || 'development';
 var isProduction = environment === 'production';
 
 var port = 1337;
-var root = __dirname;
+var base = __dirname;
 var src = './src/';
 var dist = './dist/';
 var bower = './bower_components/' ;
@@ -67,12 +69,12 @@ gulp.task('html', function() {
 	return gulp.src(src + 'index.html')
 		.pipe($.size({ title : 'html' }))
 		.pipe(isProduction ? gutil.noop() : $.duration('html'))
-		.pipe(isProduction ? gutil.noop() : $.connect.reload())
+		.pipe(reload({stream:true}))
 });
 
 // Hint, uglify and concat scripts
 gulp.task('scripts', function() {
-	var jsFiles = gulp.src(src +'js/**/*.js')
+	var jsFiles = gulp.src(src + 'js/**/*.js')
 		.pipe($.jshint());
 		
 	return es.concat(gulp.src([
@@ -81,10 +83,10 @@ gulp.task('scripts', function() {
 		.pipe($.concat('bundle.js'))
 		.pipe(isProduction ? $.uglifyjs() : $.util.noop())
 		.pipe(isProduction ? $.header(banner, { pkg : pkg } ) : $.util.noop())
-		.pipe(gulp.dest(dist +'js/'))
+		.pipe(gulp.dest(dist + 'js/'))
 		.pipe($.size({ title : 'scripts' }))
 		.pipe(isProduction ? gutil.noop() : $.duration('scripts'))
-		.pipe(isProduction ? gutil.noop() : $.connect.reload())
+		.pipe(reload({stream:true}))
 });
 
 gulp.task('headScripts', function() {
@@ -94,21 +96,19 @@ gulp.task('headScripts', function() {
 		.pipe($.concat('head-bundle.js'))
 		.pipe(isProduction ? $.uglifyjs() : $.util.noop())
 		.pipe(isProduction ? $.header(banner, { pkg : pkg } ) : $.util.noop())
-		.pipe(gulp.dest(dist +'js/'))
+		.pipe(gulp.dest(dist + 'js/'))
 		.pipe($.size({ title : 'scripts' }))
-		.pipe(isProduction ? gutil.noop() : $.duration('scripts'))
-		.pipe(isProduction ? gutil.noop() : $.connect.reload())
-});
+		.pipe(isProduction ? gutil.noop() : $.duration('scripts'))});
 
 
 // Compile SASS and concat styles
 gulp.task('styles', function() {
-	var sassFiles = $.rubySass(src +'scss/main.scss', {
+	var sassFiles = $.rubySass(src + 'scss/main.scss', {
 			style: 'compressed',
 			sourcemap: false, 
 			precision: 2
 		})
-		.on('error', function(err){
+		.on('error', function(err) {
 			new gutil.PluginError('style', err, { showStack: true });
 		});
 
@@ -123,28 +123,30 @@ gulp.task('styles', function() {
 		}) : gutil.noop())
 		.pipe(isProduction ? $.cssmin() : gutil.noop())
 		.pipe(isProduction ? $.header(banner, { pkg : pkg } ) : $.util.noop())
-		.pipe(gulp.dest(dist +'css'))
+		.pipe(gulp.dest(dist + 'css'))
 		.pipe($.size({ title : 'styles' }))
 		.pipe(isProduction ? gutil.noop() : $.duration('styles'))
-		.pipe(isProduction ? gutil.noop() : $.connect.reload())
+		.pipe(reload({stream:true}))
 });
 
 
 
-// Add livereload on the given port
-gulp.task('serve', function() {
-	$.connect.server({
-		root: root,
-		port: port,
-		livereload: true
+
+// browser-sync task for starting the server.
+gulp.task('browser-sync', function() {
+	browserSync({
+		server: {
+			baseDir: base
+		},
+		browser: 'google chrome canary'
 	});
 });
 
 
 
 // Watch sass, html and js file changes
-gulp.task('watch', function() {
-	gulp.watch(root + 'index.html', ['html']);
+gulp.task('watch', ['browser-sync'], function() {
+	gulp.watch(base + 'index.html', ['html']);
 	gulp.watch(src + 'scss/**/**/*.scss', ['styles']);
 	gulp.watch(src + 'js/**/*.js', ['scripts']);
 });
@@ -152,7 +154,6 @@ gulp.task('watch', function() {
 // by default build project and then watch files in order to trigger livereload
 gulp.task('default', [
 	'build', 
-	'serve', 
 	'watch'
 ]);
 
