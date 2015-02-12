@@ -62,12 +62,13 @@ According to the [Github pages](https://pages.github.com/) (Home -> Project site
 - I've configured the BrowserSync default browser as my personnal dev browser : Google Chrome Canary. Don't forget to change that parameters if you want to automatically open a tab in your current browser.
 - If you see these following lines, that's because Neat is still using a deprecated mixins : ```box-sizing```. Once you've imported the Neat package in ```bower_components```, juste remove or comment the line 11 in ```bower_components/neat/app/assets/stylesheets/_neat.scss```.
 
-	ulp-ruby-sass stderr: WARNING: The box-sizing mixin is deprecated and will be removed in the next major version release. This property can now be used un-prefixed.
-		on line 410 of bower_components/bourbon/app/assets/stylesheets/_bourbon-deprecated-upcoming.scss, in `box-sizing'
-		from line 5 of bower_components/neat/app/assets/stylesheets/grid/_box-sizing.scss
-		from line 11 of bower_components/neat/app/assets/stylesheets/_neat.scss
-		from line 2 of ./src/scss/main.scss
-
+```
+gulp-ruby-sass stderr: WARNING: The box-sizing mixin is deprecated and will be removed in the next major version release. This property can now be used un-prefixed.
+	on line 410 of bower_components/bourbon/app/assets/stylesheets/_bourbon-deprecated-upcoming.scss, in `box-sizing'
+	from line 5 of bower_components/neat/app/assets/stylesheets/grid/_box-sizing.scss
+	from line 11 of bower_components/neat/app/assets/stylesheets/_neat.scss
+	from line 2 of ./src/scss/main.scss
+```
 
 
 [![Analytics](https://ga-beacon.appspot.com/UA-59640055-1/github-theme-starter/readme)](https://github.com/igrigorik/ga-beacon)
