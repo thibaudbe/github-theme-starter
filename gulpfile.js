@@ -4,7 +4,6 @@ var del = require('del');
 var browserSync = require('browser-sync');
 var reload = browserSync.reload;
 var es = require('event-stream');
-var gutil = require('gulp-util');
 var spawn = require('child_process').spawn;
 var $ = require('gulp-load-plugins')({
 	pattern: ['gulp-*', 'gulp.*'],
@@ -52,8 +51,8 @@ gulp.task('clean', function(cb) {
 gulp.task('images', function(cb) {
 	return gulp.src(src + 'images/**/*.{png,jpg,jpeg,gif,svg}')
 		.pipe(gulp.dest(dist + 'images/'))
-		.pipe(isProduction ? gutil.noop() : $.size({ title : 'images' }))
-		.pipe(isProduction ? gutil.noop() : $.duration('images'));
+		.pipe(isProduction ? $.util.noop() : $.size({ title : 'images' }))
+		.pipe(isProduction ? $.util.noop() : $.duration('images'));
 });
 
 // Copy icons
@@ -68,7 +67,7 @@ gulp.task('icons', function() {
 gulp.task('html', function() {
 	return gulp.src('./index.html')
 		.pipe($.size({ title : 'html' }))
-		.pipe(isProduction ? gutil.noop() : $.duration('html'))
+		.pipe(isProduction ? $.util.noop() : $.duration('html'))
 		.pipe(reload({stream:true}))
 });
 
@@ -85,7 +84,7 @@ gulp.task('scripts', function() {
 		.pipe(isProduction ? $.header(banner, { pkg : pkg } ) : $.util.noop())
 		.pipe(gulp.dest(dist + 'js/'))
 		.pipe($.size({ title : 'scripts' }))
-		.pipe(isProduction ? gutil.noop() : $.duration('scripts'))
+		.pipe(isProduction ? $.util.noop() : $.duration('scripts'))
 		.pipe(reload({stream:true}))
 });
 
@@ -98,7 +97,7 @@ gulp.task('headScripts', function() {
 		.pipe(isProduction ? $.header(banner, { pkg : pkg } ) : $.util.noop())
 		.pipe(gulp.dest(dist + 'js/'))
 		.pipe($.size({ title : 'scripts' }))
-		.pipe(isProduction ? gutil.noop() : $.duration('scripts'))});
+		.pipe(isProduction ? $.util.noop() : $.duration('scripts'))});
 
 
 // Compile SASS and concat styles
@@ -109,7 +108,7 @@ gulp.task('styles', function() {
 			precision: 2
 		})
 		.on('error', function(err) {
-			new gutil.PluginError('style', err, { showStack: true });
+			new $.util.PluginError('style', err, { showStack: true });
 		});
 
 	return es.concat(gulp.src([
@@ -120,12 +119,12 @@ gulp.task('styles', function() {
 		.pipe($.autoprefixer({browsers: autoprefixerBrowsers}))
 		.pipe(isProduction ? $.combineMediaQueries({
 			log: true
-		}) : gutil.noop())
-		.pipe(isProduction ? $.cssmin() : gutil.noop())
+		}) : $.util.noop())
+		.pipe(isProduction ? $.cssmin() : $.util.noop())
 		.pipe(isProduction ? $.header(banner, { pkg : pkg } ) : $.util.noop())
 		.pipe(gulp.dest(dist + 'css'))
 		.pipe($.size({ title : 'styles' }))
-		.pipe(isProduction ? gutil.noop() : $.duration('styles'))
+		.pipe(isProduction ? $.util.noop() : $.duration('styles'))
 		.pipe(reload({stream:true}))
 });
 
