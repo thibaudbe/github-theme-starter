@@ -1,0 +1,49 @@
+{
+	"navbar": [
+		{
+			"title": "home",
+			"link": "/home"
+		},{
+			"title": "about",
+			"link": "/about"
+		},{
+			"title": "contact",
+			"link": "/contact"
+		}
+	],
+	"home": {
+		"title": "Home",
+		"link": "/",
+		"description": "Lorem ipsum HOME dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."
+	},
+	"about": {
+		"title": "About",
+		"link": "/about",
+		"description": "Lorem ipsum ABOUT dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."
+	},
+	"contact": {
+		"title": "Contact",
+		"link": "/contact",
+		"description": "Lorem ipsum CONTACT dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."
+	},
+	post: {
+		"title": "...",
+		"link": "...",
+		"description": "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+		"items": [
+			{
+				"title": "...",
+				"link": "...",
+				"description": "..."
+			},{
+				"title": "...",
+				"link": "...",
+				"description": "..."
+			},{
+				"title": "...",
+				"link": "...",
+				"description": "..."
+			}
+		]
+	}
+}
