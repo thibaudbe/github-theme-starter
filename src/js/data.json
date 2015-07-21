@@ -2,13 +2,13 @@
 	"navbar": [
 		{
 			"title": "home",
-			"link": "/home"
+			"link": "/#!/home"
 		},{
 			"title": "about",
-			"link": "/about"
+			"link": "/#!/about"
 		},{
 			"title": "contact",
-			"link": "/contact"
+			"link": "/#!/contact"
 		}
 	],
 	"home": {

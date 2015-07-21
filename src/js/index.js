@@ -13,9 +13,9 @@ var Contact = require('./views/Contact.jsx');
 
 Router({
 	index: ReactState('/', App, {
-		home: ReactState('/home', Home),
-		about: ReactState('/about', About),
-		contact: ReactState('/contact', Contact)
+		home: ReactState('/#!/home', Home),
+		about: ReactState('/#!/about', About),
+		contact: ReactState('/#!/contact', Contact)
 	})
 })
 .init('index');
